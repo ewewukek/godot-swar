@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://entity/ship/Ship.gd" type="Script" id=1]
+[ext_resource path="res://entity/ship/hull.png" type="Texture" id=2]
+
+[sub_resource type="ConvexPolygonShape2D" id=1]
+
+custom_solver_bias = 0.0
+points = PoolVector2Array( 0, -10, 8.66025, 5, -8.66025, 5 )
+
+[node name="Ship" type="KinematicBody2D"]
+
+input_pickable = false
+collision_layer = 1
+collision_mask = 1
+collision/safe_margin = 0.08
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+acceleration = 5
+max_velocity = 12
+friction = 1.2
+turn_acceleration = 18
+min_angular_velocity = 1
+max_angular_velocity = 18
+angular_friction = 0.5
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+
+position = Vector2( 0, -3 )
+texture = ExtResource( 2 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." index="1"]
+
+position = Vector2( 0, 1.5 )
+scale = Vector2( 1.5, 2 )
+shape = SubResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+
