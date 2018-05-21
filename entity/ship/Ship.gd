@@ -38,8 +38,6 @@ func update(dt):
 	if input_thrust:
 		velocity += Vector2(0, -1).rotated(rotation) * acceleration
 		speed = min(velocity.length(), max_velocity)
-# 		velocity = Vector2(max_velocity * 20, 0)
-# 		rotation = deg2rad(90)
 	else:
 		speed = max(0, velocity.length() - friction)
 	velocity = velocity.clamped(speed)
