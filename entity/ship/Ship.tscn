@@ -1,14 +1,17 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://entity/ship/Ship.gd" type="Script" id=1]
-[ext_resource path="res://entity/ship/hull.png" type="Texture" id=2]
+[ext_resource path="res://common/glow.shader" type="Shader" id=2]
+[ext_resource path="res://entity/ship/hull.png" type="Texture" id=3]
 
-[sub_resource type="ConvexPolygonShape2D" id=1]
+[sub_resource type="ShaderMaterial" id=1]
 
-custom_solver_bias = 0.0
-points = PoolVector2Array( 0, -10, 8.66025, 5, -8.66025, 5 )
+render_priority = 0
+shader = ExtResource( 2 )
+shader_param/glow_radius = 32.0
+_sections_unfolded = [ "shader_param" ]
 
-[node name="Ship" type="KinematicBody2D"]
+[node name="Ship" type="KinematicBody2D" index="0"]
 
 input_pickable = false
 collision_layer = 1
@@ -28,15 +31,9 @@ angular_friction = 0.5
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
-position = Vector2( 0, -3 )
-texture = ExtResource( 2 )
-_sections_unfolded = [ "Transform" ]
-
-[node name="CollisionShape" type="CollisionShape2D" parent="." index="1"]
-
-position = Vector2( 0, 1.5 )
-scale = Vector2( 1.5, 2 )
-shape = SubResource( 1 )
-_sections_unfolded = [ "Transform", "Z Index" ]
+material = SubResource( 1 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+_sections_unfolded = [ "Material", "Transform" ]
 
 
