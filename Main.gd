@@ -12,12 +12,16 @@ func _ready():
 	player_ship.position.x = ProjectSettings.get_setting("display/window/size/width") / 2
 	player_ship.position.y = ProjectSettings.get_setting("display/window/size/height") / 2
 	player_ship.add_to_group("updated")
+	player_ship.modulate = Color(0.95, 0.35, 0.35)
 	add_child(player_ship)
 
 func _process(dt):
 	if Input.is_action_pressed("input_quit"):
 		get_tree().quit()
 		return
+
+	if Input.is_action_just_pressed("debug_test"):
+		player_ship.explode()
 
 	player_ship.input_turn = 0
 	if Input.is_action_pressed("input_left"):
