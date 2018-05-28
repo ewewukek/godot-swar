@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends Node2D
 
 var velocity = Vector2()
 var angular_velocity = float()
