@@ -36,4 +36,32 @@ scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 _sections_unfolded = [ "Material", "Transform" ]
 
+[node name="Parts" type="Node2D" parent="." index="1"]
+
+visible = false
+
+[node name="FrontRight" type="Position2D" parent="Parts" index="0"]
+
+position = Vector2( 6.18718, -2.56282 )
+rotation = -0.392699
+_sections_unfolded = [ "Transform" ]
+
+[node name="BackRight" type="Position2D" parent="Parts" index="1"]
+
+position = Vector2( 6.18718, 10.5622 )
+rotation = -1.28587
+_sections_unfolded = [ "Transform" ]
+
+[node name="FrontLeft" type="Position2D" parent="Parts" index="2"]
+
+position = Vector2( -6.18718, -2.56282 )
+rotation = 0.392699
+_sections_unfolded = [ "Transform" ]
+
+[node name="BackLeft" type="Position2D" parent="Parts" index="3"]
+
+position = Vector2( -6.18718, 10.5622 )
+rotation = 1.28587
+_sections_unfolded = [ "Transform" ]
+
 

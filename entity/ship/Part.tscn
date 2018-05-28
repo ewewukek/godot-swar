@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://common/glow.shader" type="Shader" id=1]
+[ext_resource path="res://entity/ship/Part.gd" type="Script" id=2]
+
+[sub_resource type="ShaderMaterial" id=1]
+
+render_priority = 0
+shader = ExtResource( 1 )
+shader_param/glow_radius = 32.0
+_sections_unfolded = [ "shader_param" ]
+
+[node name="Part" type="Sprite" index="0"]
+
+material = SubResource( 1 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 2 )
+_sections_unfolded = [ "Material", "Transform" ]
+lifetime = 1.2
+
+

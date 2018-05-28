@@ -44,3 +44,22 @@ func update(dt):
 
 	next_position = position + velocity
 	next_rotation = rotation + angular_velocity
+
+func add_part(texture, pivot):
+	var part = preload("res://entity/ship/Part.tscn").instance()
+	part.modulate = modulate
+	part.texture = texture
+	part.position = pivot.global_position
+	part.rotation = pivot.global_rotation
+	part.velocity = (pivot.position * 0.1).rotated(rotation)
+	part.velocity += velocity * 0.1
+	part.angular_velocity = (randf() - 0.5) * 0.1
+	get_parent().add_child(part)
+
+func explode():
+	var front = preload("res://entity/ship/part_front.png")
+	var back = preload("res://entity/ship/part_back.png")
+	add_part(front, $Parts/FrontRight)
+	add_part(front, $Parts/FrontLeft)
+	add_part(back, $Parts/BackRight)
+	add_part(back, $Parts/BackLeft)

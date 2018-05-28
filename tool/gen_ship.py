@@ -26,20 +26,28 @@ def dist_seq(p, l1, l2, check_borders = True):
     e = normalize( (-v[1], v[0]) )
     return dot(e, (p[0] - l1[0], p[1] - l1[1]) )
 
+def dist2color(r):
+    r_r = round(r)
+    r1 = (r - r_r) * 255
+    r1_r = round(r1)
+    return (min(255, r_r), r1_r, 0)
+
 size = 17.5
 glow_radius = 35
 scale = 2
 
 w = h = int((size + glow_radius) * 2 * scale)
 
-im = Image.new("RGB", (w, h))
-pix = im.load()
-
 # y is up
 
 p0 = (0, size)
 p1 = (sin(pi * 0.75) * size, cos(pi * 0.75) * size)
 p2 = (0, -0.5 * size)
+
+### hull.png
+
+im = Image.new("RGB", (w, h))
+pix = im.load()
 
 for j in range(0, h):
     for i in range(0, w):
@@ -79,11 +87,66 @@ for j in range(0, h):
         #  if dist(p, p0) < 1 or dist(p, p1) < 1 or dist(p, p2) < 1:
             #  pix[i, j] = (255, 255, 255)
 
-        r_r = round(r)
-        r1 = (r - r_r) * 255
-        r1_r = round(r1)
-        pix[i, j] = (min(255, r_r), r1_r, 0)
+        pix[i, j] = dist2color(r)
 
 im.show()
 out_path = path.join(path.dirname(path.realpath(__file__)), '..', 'entity', 'ship', 'hull.png')
+im.save(out_path, "PNG")
+
+### part_front.png
+
+part_size = dist(p0, p1)
+w = int(glow_radius * 2 * scale)
+h = int((glow_radius * 2 + part_size) * scale)
+
+im = Image.new("RGB", (w, h))
+pix = im.load()
+
+p3 = (0, part_size / 2)
+
+for j in range(0, h):
+    for i in range(0, w):
+        x = (0.5 + i - w / 2) / scale
+        if x < 0: x = -x
+        y = (0.5 + h / 2 - j) / scale
+        if y < 0: y = -y
+        p = (x, y)
+        if y < p3[1]:
+            r = x
+        else:
+            r = dist(p, p3)
+
+        pix[i, j] = dist2color(r)
+
+im.show()
+out_path = path.join(path.dirname(path.realpath(__file__)), '..', 'entity', 'ship', 'part_front.png')
+im.save(out_path, "PNG")
+
+### part_back.png
+
+part_size = dist(p1, p2)
+w = int(glow_radius * 2 * scale)
+h = int((glow_radius * 2 + part_size) * scale)
+
+im = Image.new("RGB", (w, h))
+pix = im.load()
+
+p4 = (0, part_size / 2)
+
+for j in range(0, h):
+    for i in range(0, w):
+        x = (0.5 + i - w / 2) / scale
+        if x < 0: x = -x
+        y = (0.5 + h / 2 - j) / scale
+        if y < 0: y = -y
+        p = (x, y)
+        if y < p4[1]:
+            r = x
+        else:
+            r = dist(p, p4)
+
+        pix[i, j] = dist2color(r)
+
+im.show()
+out_path = path.join(path.dirname(path.realpath(__file__)), '..', 'entity', 'ship', 'part_back.png')
 im.save(out_path, "PNG")
