@@ -4,18 +4,11 @@
 
 script/source = "extends Label
 
-var frame_time = 0
-var frame_count = 0
-
 func _process(dt):
-	frame_time += dt
-	frame_count += 1
-	if frame_time > 1:
-		text = str(frame_count)
-		frame_time = 0
-		frame_count = 0"
+	text = str(Engine.get_frames_per_second())
+"
 
-[node name="FPSMeter" type="Label"]
+[node name="FPSMeter" type="Label" index="0"]
 
 anchor_left = 0.0
 anchor_top = 0.0
