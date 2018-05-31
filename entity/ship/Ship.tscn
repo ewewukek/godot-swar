@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://entity/ship/Ship.gd" type="Script" id=1]
 [ext_resource path="res://common/glow.shader" type="Shader" id=2]
 [ext_resource path="res://entity/ship/hull.png" type="Texture" id=3]
+[ext_resource path="res://entity/ParticleEmitter.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
 
@@ -63,5 +64,14 @@ _sections_unfolded = [ "Transform" ]
 position = Vector2( -6.18718, 10.5622 )
 rotation = 1.28587
 _sections_unfolded = [ "Transform" ]
+
+[node name="EffectExhaust" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 0, 10.5 )
+particles_per_second = 60
+velocity = 80.0
+color = Color( 1, 0.501961, 0, 1 )
+luminosity = 1.7
+luminosity_decrease_rate = 3.0
 
 

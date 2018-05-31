@@ -45,6 +45,8 @@ func update(dt):
 	next_position = position + velocity
 	next_rotation = rotation + angular_velocity
 
+	get_node("EffectExhaust").emitting = input_thrust
+
 func add_part(texture, pivot):
 	var part = preload("res://entity/ship/Part.tscn").instance()
 	part.modulate = modulate
