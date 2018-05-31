@@ -1,0 +1,115 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://common/glow.shader" type="Shader" id=1]
+[ext_resource path="res://entity/particle.png" type="Texture" id=2]
+
+[sub_resource type="ShaderMaterial" id=6]
+
+render_priority = 0
+shader = ExtResource( 1 )
+shader_param/glow_radius = 10.0
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="Shader" id=2]
+
+code = "shader_type particles;
+// set from outside
+uniform float velocity;
+uniform float particle_scale;
+uniform vec4 color;
+uniform float luminosity;
+uniform float luminosity_decrease_rate;
+
+void vertex() {
+	float time_step = 0.05;
+	float friction_multiplier = 0.86;
+
+	if (RESTART) {
+		VELOCITY = (EMISSION_TRANSFORM * vec4(0.0, velocity, 0.0, 0.0)).xyz;
+		TRANSFORM[0].x = particle_scale;
+		TRANSFORM[1].y = particle_scale;
+		TRANSFORM[3].xy = EMISSION_TRANSFORM[3].xy;
+
+		CUSTOM.x = luminosity;
+		CUSTOM.y = 0.0;
+	} else {
+		CUSTOM.x -= luminosity_decrease_rate * DELTA;
+		CUSTOM.y += DELTA;
+
+		if (CUSTOM.y > time_step) {
+			CUSTOM.y -= time_step;
+			VELOCITY *= friction_multiplier;
+		}
+	}
+
+	COLOR.xyz = color.xyz * CUSTOM.x;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=7]
+
+render_priority = 0
+shader = SubResource( 2 )
+shader_param/velocity = 0.0
+shader_param/particle_scale = 0.0
+shader_param/color = Color( 0, 0, 0, 1 )
+shader_param/luminosity = 0.0
+shader_param/luminosity_decrease_rate = 0.0
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="GDScript" id=5]
+
+script/source = "extends Particles2D
+
+export (int) var particles_per_second = 0
+export (float) var velocity = 1.0
+export (float) var particle_scale = 0.5
+export (Color) var color = Color(1.0, 1.0, 1.0)
+export (float) var luminosity = 1.0
+export (float) var luminosity_decrease_rate = 1.0
+
+func _ready():
+	# Particles2D handles float lifetime badly
+	lifetime = int(luminosity / luminosity_decrease_rate) + 1
+
+	if (particles_per_second > 0):
+		amount = lifetime * particles_per_second
+
+	process_material.set_shader_param(\"velocity\", velocity)
+	process_material.set_shader_param(\"particle_scale\", particle_scale)
+	process_material.set_shader_param(\"color\", color)
+	process_material.set_shader_param(\"luminosity\", luminosity)
+	process_material.set_shader_param(\"luminosity_decrease_rate\", luminosity_decrease_rate)
+"
+
+[node name="ParticleEmitter" type="Particles2D" index="0"]
+
+material = SubResource( 6 )
+emitting = false
+amount = 1
+lifetime = 1.0
+one_shot = false
+preprocess = 0.0
+speed_scale = 1.0
+explosiveness = 0.0
+randomness = 0.0
+fixed_fps = 0
+fract_delta = true
+visibility_rect = Rect2( -100, -100, 200, 200 )
+local_coords = false
+draw_order = 0
+process_material = SubResource( 7 )
+texture = ExtResource( 2 )
+normal_map = null
+h_frames = 1
+v_frames = 1
+script = SubResource( 5 )
+_sections_unfolded = [ "Process Material" ]
+particles_per_second = 0
+velocity = 1.0
+particle_scale = 0.5
+color = Color( 1, 1, 1, 1 )
+luminosity = 1.0
+luminosity_decrease_rate = 1.0
+
+
