@@ -12,7 +12,7 @@ func _ready():
 	player_ship.position.x = ProjectSettings.get_setting("display/window/size/width") / 2
 	player_ship.position.y = ProjectSettings.get_setting("display/window/size/height") / 2
 	player_ship.add_to_group("updated")
-	player_ship.modulate = Color(0.95, 0.35, 0.35)
+	player_ship.get_node("Sprite").modulate = Color(0.95, 0.35, 0.35)
 	add_child(player_ship)
 
 func _process(dt):
