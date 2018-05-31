@@ -150,3 +150,28 @@ for j in range(0, h):
 im.show()
 out_path = path.join(path.dirname(path.realpath(__file__)), '..', 'entity', 'ship', 'part_back.png')
 im.save(out_path, "PNG")
+
+
+### particle.png
+
+w = int(20 * scale)
+h = int(20 * scale)
+
+im = Image.new("RGB", (w, h))
+pix = im.load()
+
+p5 = (0, 0)
+
+for j in range(0, h):
+    for i in range(0, w):
+        x = (0.5 + i - w / 2) / scale
+        if x < 0: x = -x
+        y = (0.5 + h / 2 - j) / scale
+        if y < 0: y = -y
+        p = (x, y)
+
+        pix[i, j] = dist2color( dist(p, p5) )
+
+im.show()
+out_path = path.join(path.dirname(path.realpath(__file__)), '..', 'entity', 'particle.png')
+im.save(out_path, "PNG")
