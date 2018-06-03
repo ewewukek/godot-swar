@@ -3,7 +3,7 @@
 [ext_resource path="res://common/glow.shader" type="Shader" id=1]
 [ext_resource path="res://entity/particle.png" type="Texture" id=2]
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=1]
 
 render_priority = 0
 shader = ExtResource( 1 )
@@ -33,7 +33,7 @@ void vertex() {
 		CUSTOM.x = luminosity;
 		CUSTOM.y = 0.0;
 	} else {
-		CUSTOM.x -= luminosity_decrease_rate * DELTA;
+		CUSTOM.x = max(0.0, CUSTOM.x - luminosity_decrease_rate * DELTA);
 		CUSTOM.y += DELTA;
 
 		if (CUSTOM.y > time_step) {
@@ -42,11 +42,11 @@ void vertex() {
 		}
 	}
 
-	COLOR.xyz = color.xyz * CUSTOM.x;
+	COLOR.rgb = color.rgb * CUSTOM.x;
 }
 "
 
-[sub_resource type="ShaderMaterial" id=7]
+[sub_resource type="ShaderMaterial" id=3]
 
 render_priority = 0
 shader = SubResource( 2 )
@@ -57,7 +57,7 @@ shader_param/luminosity = 0.0
 shader_param/luminosity_decrease_rate = 0.0
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 
 script/source = "extends Particles2D
 
@@ -84,7 +84,7 @@ func _ready():
 
 [node name="ParticleEmitter" type="Particles2D" index="0"]
 
-material = SubResource( 6 )
+material = SubResource( 1 )
 emitting = false
 amount = 1
 lifetime = 1.0
@@ -98,12 +98,12 @@ fract_delta = true
 visibility_rect = Rect2( -100, -100, 200, 200 )
 local_coords = false
 draw_order = 0
-process_material = SubResource( 7 )
+process_material = SubResource( 3 )
 texture = ExtResource( 2 )
 normal_map = null
 h_frames = 1
 v_frames = 1
-script = SubResource( 5 )
+script = SubResource( 4 )
 _sections_unfolded = [ "Process Material" ]
 particles_per_second = 0
 velocity = 1.0
