@@ -49,7 +49,7 @@ func update(dt):
 
 func add_part(texture, pivot):
 	var part = preload("res://entity/ship/Part.tscn").instance()
-	part.modulate = modulate
+	part.modulate = $Sprite.modulate
 	part.texture = texture
 	part.position = pivot.global_position
 	part.rotation = pivot.global_rotation
