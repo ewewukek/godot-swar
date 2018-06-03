@@ -9,7 +9,7 @@
 
 render_priority = 0
 shader = ExtResource( 2 )
-shader_param/glow_radius = 32.0
+shader_param/glow_radius = 35.0
 _sections_unfolded = [ "shader_param" ]
 
 [node name="Ship" type="KinematicBody2D" index="0"]
