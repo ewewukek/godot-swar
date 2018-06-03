@@ -61,16 +61,12 @@ for j in range(0, h):
 
         if d1 >= 0:
             r = d1
-            #  pix[i, j] = (0, 0, 255)
         elif y >= p0[1]:
             r = dist(p, p0)
-            #  pix[i, j] = (0, 255, 0)
         elif d2 >= 0:
             r = d2
-            #  pix[i, j] = (0, 255, 255)
         elif x >= p1[0] or y <= p1[1]:
             r = dist(p, p1)
-            #  pix[i, j] = (255, 0, 0)
         else:
             d1 = dist_seq(p, p1, p0, False)
             d2 = dist_seq(p, p2, p1, False)
@@ -78,14 +74,6 @@ for j in range(0, h):
                 raise Exception("something is wrong")
 
             r = min(d1, d2)
-
-            #  if d1 < d2:
-                #  pix[i, j] = (255, 0, 255)
-            #  else:
-                #  pix[i, j] = (255, 255, 0)
-
-        #  if dist(p, p0) < 1 or dist(p, p1) < 1 or dist(p, p2) < 1:
-            #  pix[i, j] = (255, 255, 255)
 
         pix[i, j] = dist2color(r)
 
